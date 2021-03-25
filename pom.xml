@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>gg.amy.hyperblock</groupId>
+    <artifactId>hyperblock</artifactId>
+    <version>0.0.1</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>15</maven.compiler.source>
+        <maven.compiler.target>15</maven.compiler.target>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack</id>
+            <name>jitpack</name>
+            <url>https://jitpack.io/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <modules>
+        <module>hyper-plugin</module>
+        <module>libhyper</module>
+    </modules>
+</project>

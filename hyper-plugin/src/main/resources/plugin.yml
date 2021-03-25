@@ -1,0 +1,5 @@
+name: "hyperblock"
+main: "gg.amy.hyperblock.Hyperblock"
+version: "${project.version}"
+api-version: "1.13"
+load: "STARTUP"
