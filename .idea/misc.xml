@@ -4,9 +4,10 @@
     <currentScheme>IDE</currentScheme>
   </component>
   <component name="EntryPointsManager">
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="gg.amy.mc.cardboard.command.Command" />
-      <item index="1" class="java.lang.String" itemvalue="org.bukkit.event.EventHandler" />
+      <item index="1" class="java.lang.String" itemvalue="gg.amy.mc.cardboard.component.Component" />
+      <item index="2" class="java.lang.String" itemvalue="org.bukkit.event.EventHandler" />
     </list>
     <writeAnnotations>
       <writeAnnotation name="gg.amy.mc.cardboard.di.Auto" />

@@ -49,10 +49,12 @@ public final class WorldStorageBackend {
         final var config = new JedisPoolConfig();
         config.setMaxTotal(10);
         config.setMaxIdle(3);
+        // TODO: Env
         POOL = new JedisPool(config);
 
         S = S3Client.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create("minioadmin", "minioadmin")))
+                // TODO: Env
                 .endpointOverride(URI.create("http://localhost:9000"))
                 .region(Region.AWS_GLOBAL)
                 .build();

@@ -2,9 +2,14 @@ package gg.amy.hyperblock.utils;
 
 import io.netty.buffer.ByteBufInputStream;
 import net.minecraft.server.v1_16_R3.*;
+import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.spigotmc.LimitStream;
 
+import javax.annotation.Nonnull;
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * @author amy
@@ -13,6 +18,53 @@ import java.io.*;
 @SuppressWarnings({"SameParameterValue", "TypeMayBeWeakened"})
 public final class NbtHelpers {
     private NbtHelpers() {
+    }
+
+    public static NBTTagCompound serializePlayerInventory(@Nonnull final Player p) {
+        final var inv = new NBTTagList();
+        final var armour = new NBTTagList();
+        final var extra = new NBTTagList();
+        for(final var i : p.getInventory().getContents()) {
+            final var compound = new NBTTagCompound();
+            CraftItemStack.asNMSCopy(i).save(compound);
+            inv.add(compound);
+        }
+        for(final var i : p.getInventory().getArmorContents()) {
+            final var compound = new NBTTagCompound();
+            CraftItemStack.asNMSCopy(i).save(compound);
+            armour.add(compound);
+        }
+        for(final var i : p.getInventory().getExtraContents()) {
+            final var compound = new NBTTagCompound();
+            CraftItemStack.asNMSCopy(i).save(compound);
+            extra.add(compound);
+        }
+        final var compound = new NBTTagCompound();
+        compound.set("inv", inv);
+        compound.set("armour", armour);
+        compound.set("extra", extra);
+        return compound;
+    }
+
+    public static void deserializePlayerInventory(@Nonnull final Player p, @Nonnull final NBTTagCompound nbt) {
+        final var inv = new ArrayList<ItemStack>();
+        final var armour = new ArrayList<ItemStack>();
+        final var extra = new ArrayList<ItemStack>();
+        for(final var i : nbt.getList("inv", 9)) {
+            final var bis = CraftItemStack.asBukkitCopy(net.minecraft.server.v1_16_R3.ItemStack.a((NBTTagCompound) i));
+            inv.add(bis);
+        }
+        for(final var i : nbt.getList("armour", 9)) {
+            final var bis = CraftItemStack.asBukkitCopy(net.minecraft.server.v1_16_R3.ItemStack.a((NBTTagCompound) i));
+            armour.add(bis);
+        }
+        for(final var i : nbt.getList("extra", 9)) {
+            final var bis = CraftItemStack.asBukkitCopy(net.minecraft.server.v1_16_R3.ItemStack.a((NBTTagCompound) i));
+            extra.add(bis);
+        }
+        p.getInventory().setContents(inv.toArray(new ItemStack[0]));
+        p.getInventory().setArmorContents(armour.toArray(new ItemStack[0]));
+        p.getInventory().setExtraContents(extra.toArray(new ItemStack[0]));
     }
 
     public static NBTTagCompound read(final InputStream inputstream) {
