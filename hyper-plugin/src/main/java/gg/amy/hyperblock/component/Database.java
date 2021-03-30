@@ -73,6 +73,7 @@ public class Database {
                         .uuid(uuid)
                         .compressedInventory()
                         .build();
+                set(player);
             }
             return player;
         }
