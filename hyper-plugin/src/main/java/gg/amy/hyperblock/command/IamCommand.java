@@ -7,6 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 import static org.bukkit.ChatColor.GRAY;
 import static org.bukkit.ChatColor.GREEN;
 
@@ -33,7 +35,8 @@ public class IamCommand {
                         %sYou are at (%s%s%s, %s%s%s, %s%s%s) in %s%s%s.
                         """,
                 GRAY, GREEN, player.getName(), GRAY, GREEN, player.getUniqueId(), GRAY,
-                GRAY, GREEN, l.getBlockX(), GRAY, GREEN, l.getBlockY(), GRAY, GREEN, l.getBlockZ(), GRAY, GREEN, l.getWorld().getName(), GRAY
+                GRAY, GREEN, l.getBlockX(), GRAY, GREEN, l.getBlockY(), GRAY, GREEN, l.getBlockZ(), GRAY,
+                GREEN, Objects.requireNonNull(l.getWorld()).getName(), GRAY
         ));
     }
 }
