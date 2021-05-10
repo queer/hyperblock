@@ -6,14 +6,16 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.*;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Indexes;
+import com.mongodb.client.model.ReplaceOptions;
 import gg.amy.hyperblock.component.database.HyperPlayer;
-import gg.amy.hyperblock.component.database.ImmutableHyperPlayer;
 import gg.amy.mc.cardboard.component.Component;
 import gg.amy.mc.cardboard.component.Single;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.UUID;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -69,10 +71,7 @@ public class Database {
         public HyperPlayer get(@Nonnull final UUID uuid) {
             var player = collection.find(Filters.eq("uuid", uuid.toString())).first();
             if(player == null) {
-                player = ImmutableHyperPlayer.builder()
-                        .uuid(uuid)
-                        .compressedInventory()
-                        .build();
+                player = new HyperPlayer(uuid, List.of(), new byte[0]);
                 set(player);
             }
             return player;

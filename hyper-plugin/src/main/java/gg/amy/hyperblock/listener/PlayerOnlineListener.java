@@ -3,7 +3,7 @@ package gg.amy.hyperblock.listener;
 import com.github.luben.zstd.Zstd;
 import gg.amy.hyperblock.bukkit.SkyblockChunkGenerator;
 import gg.amy.hyperblock.component.Database;
-import gg.amy.hyperblock.component.database.ImmutableHyperPlayer;
+import gg.amy.hyperblock.component.database.HyperPlayer;
 import gg.amy.hyperblock.utils.NbtHelpers;
 import gg.amy.mc.cardboard.di.Auto;
 import org.bukkit.Bukkit;
@@ -54,10 +54,8 @@ public class PlayerOnlineListener implements Listener {
         try(final var baos = new ByteArrayOutputStream()) {
             NbtHelpers.write(serialized, baos);
             final var compressed = Zstd.compress(baos.toByteArray());
-            final var hp = ImmutableHyperPlayer.builder()
-                    .from(db.getPlayerDb().get(uuid))
-                    .compressedInventory(compressed)
-                    .build();
+            final var old = db.getPlayerDb().get(uuid);
+            final var hp = new HyperPlayer(uuid, old.snapshots(), compressed);
             db.getPlayerDb().set(hp);
         } catch(final IOException e) {
             throw new IllegalStateException(e);
